@@ -1,69 +1,93 @@
 import tkinter as tk
 
+def writeLabel(reg,mode):
+    if reg % 1==0:
+        reg=int(reg)
+    else:
+        reg=float(format(reg,'.6'))
+    label["text"]=str(reg)   
+    
 def on_button_click(event):
-    global reg
+    global regA
     global numberInput
     global mode
     button_text = event.widget.cget("text")
     #print(f"{button_text}ボタンが押されました")
-    if numberInput:
+    if button_text == "+/-":
+            mode=""
+            regA=-regA
+            writeLabel(regA,"")
+    elif numberInput: #数値モード
+        print(f"数値モード{button_text}")
         if button_text == "C":
             #reg=0
             #mode=""
-            label["text"]=f"0"
-        elif button_text == "+/-":
-            mode=""
-            reg=-float(label["text"])
-            if reg%1==0:
-                reg=int(reg)
-            label["text"]=f"{reg}{mode}"
+            writeLabel(0,"")
         elif button_text == "√":
-            reg=float(label["text"])**0.5
+            regA=float(label["text"])**0.5
             mode=""
-            numberInput=True
-            label["text"]=f"{reg}{mode}"
-        elif len(label["text"])<10 and button_text in ("0123456789"):
+            writeLabel(regA,"")
+        elif button_text in ("0123456789."):
             #数字の入力
-            #10文字を超えたら数字の入力を拒否
-            label["text"]+=button_text
+            #符号と小数点を除き10文字を超えたら数字の入力を拒否
+            txt=label["text"]
+            minous = True if txt[0]=="-" else False
+            dot = True if "." in txt else False
+            length=len(txt)-(1 if minous else 0)-(1 if dot else 0)
+            print(dot)
+            if button_text==".":
+                if not dot:
+                    label["text"]+="."
+            elif txt=="0":
+                label["text"]=button_text
+            elif length<10:
+                label["text"]+=button_text
+            regA=float(label["text"])
+           
         elif button_text in ("+-X/="):
             #機能ボタンを押されたら数字を確定し表示値を計算値に更新
             numberInput=False
             if mode == "+":
-                reg+=float(label["text"])
+                regA+=float(label["text"])
             elif mode == "X":
-                reg*=float(label["text"])
+                regA*=float(label["text"])
             elif mode == "/":
-                reg/=float(label["text"])
+                regA/=float(label["text"])
             elif mode == "-":
-                reg-=float(label["text"])
+                regA-=float(label["text"])
             elif mode == "":
-                reg=float(label["text"])
+                regA=float(label["text"])
             mode=button_text
-            if reg%1==0:
-                reg=int(reg)
-            label["text"]=f"{reg}{mode}"
-    else:
+            if regA%1==0:
+                regA=int(regA)
+            label["text"]=f"{regA}{mode}"
+    else: #機能選択モード
+        print(f"機能モード{button_text}")
         if button_text in ("0123456789"):
             #数字ボタンを押されたら数字入力モードへ
             label["text"]=button_text
+            regA=float(label["text"])
             numberInput=True
+        elif button_text==".":
+            label["text"]="0."
+            regA=0
+            numberInput=True
+            
         elif button_text in ("+-X/"):
             mode = button_text
-            reg=-reg
-            label["text"]=f"{reg}{mode}"
+            label["text"]=f"{regA}{mode}"
             
 #メインウィンドウを作る
 root = tk.Tk()
 root.title("計算機")
 
-reg=0 #前回の入力値または計算結果
+regA=0 #前回の入力値または計算結果
 mode=""   #現在の計算モードを示す
 numberInput=False #数字を入力する状態 
 # F---数字ボタン--->(T)---機能ボタン--->F
 #                   L---数字ボタン
 
-label=tk.Label(root, text="")
+label=tk.Label(root, text="0")
 label.config(font=("",24),bg="grey", width=12 ,height=1)
 label.grid(row=0,column=0, columnspan=4)
 
