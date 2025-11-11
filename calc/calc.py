@@ -6,7 +6,7 @@ def writeLabel():
     if regA % 1==0:
         regA=int(regA)
     else:
-        regA=float(format(regA,'.6'))
+        regA=float(format(regA,'.10'))
     label["text"]=f"{str(regA)}{mode}"   
     
 def on_button_click(event):
@@ -17,16 +17,21 @@ def on_button_click(event):
     #print(f"{button_text}ボタンが押されました")
     if button_text == "+/-":
         mode=""
-        regA=-regA
+        regA=-float(label["text"])
         writeLabel()
     elif button_text == "C":
         #reg=0
         mode=""
         label["text"]="0"
     elif button_text == "√":
-        regA=regA**0.5
-        mode=""
-        writeLabel()
+        if float(label["text"])<0:
+            regA=0
+            label["text"]="Err"
+            mode=""
+        else:
+            regA=float(label["text"])**0.5
+            mode=""
+            writeLabel()
     elif numberInput: #数値モード
         print(f"数値モード{button_text}")
         if button_text in ("0123456789."):
