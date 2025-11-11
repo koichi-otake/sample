@@ -21,7 +21,7 @@ def on_button_click(event):
     elif button_text == "C":
         #reg=0
         mode=""
-        label["text"]+="0"
+        label["text"]="0"
     elif button_text == "√":
         regA=regA**0.5
         mode=""
