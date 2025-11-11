@@ -43,7 +43,7 @@ def on_button_click(event):
                 label["text"]=button_text
             elif length<10:
                 label["text"]+=button_text
-            regA=float(label["text"])
+            #regA=float(label["text"])
         elif button_text in ("+-X/="):
             #機能ボタンを押されたら数字を確定し表示値を計算値に更新
             numberInput=False
@@ -55,12 +55,13 @@ def on_button_click(event):
             elif mode == "/":
                 print(f"{regA} {label['text']}")
                 regA=float(regA)/float(label["text"])
-                print(regA)
+                
             elif mode == "-":
                 regA-=float(label["text"])
             elif mode == "":
                 regA=float(label["text"])
             mode=button_text
+            writeLabel(mode)
             if regA%1==0:
                 regA=int(regA)
             label["text"]=f"{regA}{mode}"
