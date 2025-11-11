@@ -28,6 +28,7 @@ def on_button_click(event):
             regA=0
             label["text"]="Err"
             mode=""
+            numberInput=False
         else:
             regA=float(label["text"])**0.5
             mode=""
