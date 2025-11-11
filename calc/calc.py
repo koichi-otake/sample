@@ -1,12 +1,13 @@
 import tkinter as tk
 
-def writeLabel(mode):
+def writeLabel():
     global regA
+    global mode
     if regA % 1==0:
         regA=int(regA)
     else:
         regA=float(format(regA,'.6'))
-    label["text"]=str(regA)   
+    label["text"]=f"{str(regA)}{mode}"   
     
 def on_button_click(event):
     global regA
@@ -17,7 +18,7 @@ def on_button_click(event):
     if button_text == "+/-":
         mode=""
         regA=-regA
-        writeLabel("")
+        writeLabel()
     elif button_text == "C":
         #reg=0
         mode=""
@@ -25,7 +26,7 @@ def on_button_click(event):
     elif button_text == "√":
         regA=regA**0.5
         mode=""
-        writeLabel("")
+        writeLabel()
     elif numberInput: #数値モード
         print(f"数値モード{button_text}")
         if button_text in ("0123456789."):
@@ -61,22 +62,18 @@ def on_button_click(event):
             elif mode == "":
                 regA=float(label["text"])
             mode=button_text
-            writeLabel(mode)
             if regA%1==0:
                 regA=int(regA)
-            label["text"]=f"{regA}{mode}"
+            writeLabel()
     else: #機能選択モード
-        print(f"機能モード{button_text}")
+        #print(f"機能モード{button_text}")
         if button_text in ("0123456789"):
             #数字ボタンを押されたら数字入力モードへ
             label["text"]=button_text
-            #regA=float(label["text"])
             numberInput=True
         elif button_text==".":
             label["text"]="0."
-            #regA=0
-            numberInput=True
-            
+            numberInput=True   
         elif button_text in ("+-X/"):
             mode = button_text
             label["text"]=f"{regA}{mode}"
