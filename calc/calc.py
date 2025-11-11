@@ -1,11 +1,12 @@
 import tkinter as tk
 
-def writeLabel(reg,mode):
-    if reg % 1==0:
-        reg=int(reg)
+def writeLabel(mode):
+    global regA
+    if regA % 1==0:
+        regA=int(regA)
     else:
-        reg=float(format(reg,'.6'))
-    label["text"]=str(reg)   
+        regA=float(format(regA,'.6'))
+    label["text"]=str(regA)   
     
 def on_button_click(event):
     global regA
@@ -14,20 +15,20 @@ def on_button_click(event):
     button_text = event.widget.cget("text")
     #print(f"{button_text}ボタンが押されました")
     if button_text == "+/-":
-            mode=""
-            regA=-regA
-            writeLabel(regA,"")
+        mode=""
+        regA=-regA
+        writeLabel("")
+    elif button_text == "C":
+        #reg=0
+        mode=""
+        label["text"]+="0"
+    elif button_text == "√":
+        regA=regA**0.5
+        mode=""
+        writeLabel("")
     elif numberInput: #数値モード
         print(f"数値モード{button_text}")
-        if button_text == "C":
-            #reg=0
-            #mode=""
-            writeLabel(0,"")
-        elif button_text == "√":
-            regA=float(label["text"])**0.5
-            mode=""
-            writeLabel(regA,"")
-        elif button_text in ("0123456789."):
+        if button_text in ("0123456789."):
             #数字の入力
             #符号と小数点を除き10文字を超えたら数字の入力を拒否
             txt=label["text"]
@@ -43,16 +44,18 @@ def on_button_click(event):
             elif length<10:
                 label["text"]+=button_text
             regA=float(label["text"])
-           
         elif button_text in ("+-X/="):
             #機能ボタンを押されたら数字を確定し表示値を計算値に更新
             numberInput=False
             if mode == "+":
                 regA+=float(label["text"])
+                #print(label["text"])
             elif mode == "X":
                 regA*=float(label["text"])
             elif mode == "/":
-                regA/=float(label["text"])
+                print(f"{regA} {label['text']}")
+                regA=float(regA)/float(label["text"])
+                print(regA)
             elif mode == "-":
                 regA-=float(label["text"])
             elif mode == "":
@@ -66,11 +69,11 @@ def on_button_click(event):
         if button_text in ("0123456789"):
             #数字ボタンを押されたら数字入力モードへ
             label["text"]=button_text
-            regA=float(label["text"])
+            #regA=float(label["text"])
             numberInput=True
         elif button_text==".":
             label["text"]="0."
-            regA=0
+            #regA=0
             numberInput=True
             
         elif button_text in ("+-X/"):
