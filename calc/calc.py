@@ -34,9 +34,12 @@ def on_button_click(event):
             writeLabel()
     elif numberInput: #数値モード
         if button_text == "+/-":
-            regA=-float(label["text"])
-            mode=""
-            writeLabel()
+            txt=label["text"]
+            if txt[0]=="-":
+                label["text"]=txt[1:]
+            else:
+                label["text"]="-"+txt
+                        #writeLabel()
             #print(f"数値モード{button_text}")
         elif button_text in ("0123456789."):
             #数字の入力
