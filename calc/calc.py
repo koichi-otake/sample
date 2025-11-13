@@ -14,8 +14,8 @@ def on_button_click(event):
     global numberInput
     global mode
     button_text = event.widget.cget("text")
-    print(f"{button_text}ボタンが押されました")
-    print(f"{mode} : {regA} : {label["text"]} {button_text}")
+    #print(f"{button_text}ボタンが押されました")
+    #print(f"{mode} : {regA} : {label["text"]} {button_text}")
     if button_text == "AC":
         mode=""
         regA=0
@@ -72,7 +72,7 @@ def on_button_click(event):
             elif mode == "X":
                 regA*=float(label["text"])
             elif mode == "/":
-                print(f"{regA} {label['text']}")
+                #print(f"{regA} {label['text']}")
                 regA=float(regA)/float(label["text"])
             elif mode == "-":
                 regA-=float(label["text"])
