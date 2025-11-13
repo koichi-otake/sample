@@ -19,12 +19,9 @@ def on_button_click(event):
         mode=""
         regA=0
         label["text"]="0"
+        numberInput=False
     elif button_text == "C":
         label["text"]="0"
-    elif button_text == "+/-":
-        mode=""
-        regA=-float(label["text"])
-        writeLabel()
     elif button_text == "√":
         if float(label["text"])<0:
             regA=0
@@ -36,8 +33,12 @@ def on_button_click(event):
             mode=""
             writeLabel()
     elif numberInput: #数値モード
-        print(f"数値モード{button_text}")
-        if button_text in ("0123456789."):
+        if button_text == "+/-":
+            regA=-float(label["text"])
+            mode=""
+            writeLabel()
+            #print(f"数値モード{button_text}")
+        elif button_text in ("0123456789."):
             #数字の入力
             #符号と小数点を除き10文字を超えたら数字の入力を拒否
             txt=label["text"]
