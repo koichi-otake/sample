@@ -53,7 +53,7 @@ def on_button_click(event):
             minous = True if txt[0]=="-" else False
             dot = True if "." in txt else False
             length=len(txt)-(1 if minous else 0)-(1 if dot else 0)
-            print(dot)
+            #print(dot)
             if button_text==".":
                 if not dot:
                     label["text"]+="."
