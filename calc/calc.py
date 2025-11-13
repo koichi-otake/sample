@@ -39,8 +39,7 @@ def on_button_click(event):
                 label["text"]=txt[1:]
             else:
                 label["text"]="-"+txt
-                        #writeLabel()
-            #print(f"数値モード{button_text}")
+                #print(f"数値モード{button_text}")
         elif button_text in ("0123456789."):
             #数字の入力
             #符号と小数点を除き10文字を超えたら数字の入力を拒否
@@ -60,6 +59,7 @@ def on_button_click(event):
         elif button_text in ("+-X/="):
             #機能ボタンを押されたら数字を確定し表示値を計算値に更新
             numberInput=False
+            print(f"{mode}+{regA}+{button_text}")
             if mode == "+":
                 regA+=float(label["text"])
                 #print(label["text"])
@@ -71,7 +71,7 @@ def on_button_click(event):
                 
             elif mode == "-":
                 regA-=float(label["text"])
-            elif mode == "":
+            elif mode == "=":
                 regA=float(label["text"])
             mode=button_text
             if regA%1==0:
