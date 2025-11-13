@@ -15,14 +15,16 @@ def on_button_click(event):
     global mode
     button_text = event.widget.cget("text")
     #print(f"{button_text}ボタンが押されました")
-    if button_text == "+/-":
+    if button_text == "AC":
+        mode=""
+        regA=0
+        label["text"]="0"
+    elif button_text == "C":
+        label["text"]="0"
+    elif button_text == "+/-":
         mode=""
         regA=-float(label["text"])
         writeLabel()
-    elif button_text == "C":
-        #reg=0
-        mode=""
-        label["text"]="0"
     elif button_text == "√":
         if float(label["text"])<0:
             regA=0
@@ -91,8 +93,6 @@ root.title("計算機")
 regA=0 #前回の入力値または計算結果
 mode=""   #現在の計算モードを示す
 numberInput=False #数字を入力する状態 
-# F---数字ボタン--->(T)---機能ボタン--->F
-#                   L---数字ボタン
 
 label=tk.Label(root, text="0")
 label.config(font=("",24),bg="grey", width=12 ,height=1)
@@ -103,7 +103,7 @@ buttonList = ( "C","+/-","√","/",
                "7","8","9","X",
                "4","5","6","-",
                "1","2","3","+",
-               "0","00",".","=")
+               "AC","0",".","=")
 
 #ボタンを配置する 
 for i in range(0,20):
