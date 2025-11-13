@@ -33,16 +33,19 @@ def on_button_click(event):
                 #print(f"数値モード{button_text}")
         elif button_text == "√":
             txt=label["text"]
+            #print(f"{mode} : {regA} : {button_text}  : {txt}")
             if txt[0]=="-":
                 regA=0
                 label["text"]="Err"
                 numberInput=False
             #elif mode!="":
             #   regA=float(txt[:-1])**0.5
-            else:     
-                print(f"{mode} + {regA} + {button_text}   {txt}")
-                regA=float(txt)**0.5
-                writeLabel()
+            else:
+                sqrt = float(txt)**0.5 
+                if sqrt % 1 == 0:
+                    label["text"]=format(int(sqrt))
+                else:
+                    label["text"]=format(sqrt,'.10')
         elif button_text in ("0123456789."):
             #数字の入力
             #符号と小数点を除き10文字を超えたら数字の入力を拒否
@@ -71,7 +74,6 @@ def on_button_click(event):
             elif mode == "/":
                 print(f"{regA} {label['text']}")
                 regA=float(regA)/float(label["text"])
-                
             elif mode == "-":
                 regA-=float(label["text"])
             elif mode == "=":
@@ -85,8 +87,7 @@ def on_button_click(event):
     else: #演算子選択モード
         #print(f"機能モード{button_text}")
         if button_text == "√":
-            txt=label["text"]
-            if txt[0]=="-":
+            if regA<0:
                 regA=0
                 label["text"]="Err"
                 numberInput=False
@@ -109,7 +110,7 @@ root = tk.Tk()
 root.title("計算機")
 
 regA=0 #前回の入力値または計算結果
-mode="="   #現在の計算モードを示す
+mode=""   #現在の計算モードを示す
 numberInput=False #数字を入力する状態 
 
 label=tk.Label(root, text="0")
